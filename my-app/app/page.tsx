@@ -1,4 +1,5 @@
 'use client'
+// player data = {0 : {"alice": "imposter"}}
 
 
 import { useEffect, useState } from "react";
@@ -15,7 +16,23 @@ export default function Home() {
     "tom": "normal"
   }
 
-  const [players, setPlayers] = useState(tempPlayers)
+  const newTempPlayers = {
+    0: {"alice":"imposter"},
+    1: {"sanskrit":"imposter"},
+    2: {"william":"normal"},
+  }
+
+
+
+
+  const tempMap = new Map([
+    ["alice","imposter"],
+    ["tom", "normal"],
+    ["toyoda","imposter"]
+
+  ])
+
+  const [players, setPlayers] = useState(newTempPlayers)
 
   const update = ((chosen: string)=> {
     setChosenWord(chosen)
@@ -36,7 +53,7 @@ export default function Home() {
     <div>
       <p>Hello this is the game</p>
       <p> this sit eh word {chosenWord}</p>
-      <AddPlayers players = {players} />
+      <AddPlayers players = {players} setPlayers = {setPlayers} />
 
     </div>
   );
