@@ -14,9 +14,14 @@ reveal imposters
 
 add players tsx component
 
-make it so keys change to accoodate when player is deleted
+<!-- make it so keys change to accoodate when player is deleted -->
 
 <!-- decrease player -->
 <!-- players start with player[number]  -->
 <!-- ach player has a corresponding text field whic can be used to change the name of said player -->
 <!-- players are name: imposter/normal -->
+
+<!-- when game starts, assign imposters -->
+
+[show players their roles]
+limit the amount of imposters to less than half of the players
