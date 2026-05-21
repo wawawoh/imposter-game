@@ -2,15 +2,18 @@
 
 
 
+
 import { useEffect, useState } from "react";
 import AddPlayers from "./components/addPLayers";
 import ChangeImposterAmount from "./components/changeImposterAmount";
+import Link from "next/link";
 
 export default function Home() {
 
   const words = ["toast", "avocado", "spaghetii", "grass" ]
   const [chosenWord, setChosenWord] = useState("")
   const [imposterAmount, setImposterAmount] = useState(1)
+  const [data, setData] = useState([])
 
   
 
@@ -27,14 +30,22 @@ export default function Home() {
     setChosenWord(chosen)
   })
 
+  // fetches words from api upon load
   useEffect(()=> {
-    const url = "https://random-words-api.kushcreates.com/api?words=1&category=animals&lanuage=english"
+    const url = "https://random-words-api.kushcreates.com/api?words=20&category=animals&language=en"
     async function fetchData ()  {
       try {
         const response = await fetch(url)
         if (response.ok) {
-          const data = await response.json()
-          console.log(data[0].word)
+          const temp = await response.json()
+
+          for (const object of temp ) {
+            setData(prev => [...prev, object.word]) 
+          }
+          
+          
+
+         
         }
         else {
           throw new Error("there was an error fetching")
@@ -49,50 +60,27 @@ export default function Home() {
       
     }
     fetchData()
-    // fetch from array 
+   
     
-    const index = Math.floor(Math.random() * words.length)
-    const chosen = words[index]
-    console.log(chosen)
-    update(chosen)
+   
    
   }, [])
 
-  const startGame = () => {
-    // chooses imposter numbers
-    const imposterNumbers = new Set([])
-    while (imposterNumbers.size < imposterAmount) {
-      const randomIndex = Math.floor(Math.random() * (players.length ))
-      imposterNumbers.add(randomIndex)
-      console.log("daw")
-    }
-    console.log(imposterNumbers)
-    
-    const tempPlayerArray = [...players]
-    for (const index of imposterNumbers) {
-      console.log(index)
-      const keyName = Object.keys(tempPlayerArray[index]) 
-      const mutatedObj = {[keyName]: "imposter"}
-      tempPlayerArray.splice(index, 1, mutatedObj)
-
-      
-      
-    }
-    console.log(tempPlayerArray)
-    // choose a word
-    // assign an imposter
-  }
   
   
-   
   return (
     
-    <div>
-      <p>Hello this is the game</p>
+    <div className="startPage">
+      <h1>Imposter</h1>
+      {/* <button>Begin </button>
       <p> this sit eh word {chosenWord}</p>
       <AddPlayers players = {players} setPlayers = {setPlayers} />
-      <ChangeImposterAmount imposterAmount = {imposterAmount} setImposterAmount = {setImposterAmount} players = {players} />
-      <button onClick={startGame}>start game</button>
+      <ChangeImposterAmount imposterAmount = {imposterAmount} setImposterAmount = {setImposterAmount} players = {players} /> */}
+      <Link href={"/choosePlayers"}>
+       <button className="border-solid border-foreground border-2 px-4 py-2 text-white rounded-sm" >start game</button>
+
+      </Link>
+     
 
     </div>
   );
